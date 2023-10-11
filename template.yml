@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Resilient Bartender on Lambda
+
+Resources:
+  ResilientBartenderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      # This corresponds to the processor architecture of the machine building the Docker image.
+      # It must match the architecture on lambda
+      # In my case, I'm on a Mac Pro M1
+      Architectures: [arm64]
+      MemorySize: 512
+      Timeout: 10
+      Environment:
+        Variables:
+          RUST_LOG: debug
+          READINESS_CHECK_PATH: /q/health/ready
+          ASYNC_INIT: true
+      Events:
+        Root:
+          Type: HttpApi
+    Metadata:
+      DockerTag: v1
+      DockerContext: ./
+      Dockerfile: Dockerfile
+
+Outputs:
+  URL:
+    Description: "API Gateway endpoint URL for Prod stage for Resilient Bartender function"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/"

@@ -1,5 +1,11 @@
-*
-!target/*-runner
-!target/*-runner.jar
-!target/lib/*
-!target/quarkus-app/*
+.idea
+.mvn
+.quarkus
+.gitignore
+.dockerignore
+.sdkmanrc
+LICENSE.txt
+mvnw*
+README*
+target
+docs

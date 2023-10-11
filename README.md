@@ -58,6 +58,21 @@ These are relatively costly tests, in terms of execution time (so the feedback l
 But don't forget the most important principle of software testing:
 > Early Testing Saves Time And Money
 
+# Little extra :  deploy base architecture on AWS ☁️
+## Prerequisites
+- Install and configure [SAM CLI][sam-cli-prerequisites]
+## Build container image
+```bash
+sam build
+```
+## Deploy on AWS Lambda
+
+> A small architecture will be deployed based on API Gateway + AWS Lambda (using [aws-lambda-web-adapter][aws-lambda-web-adapter-doc])
+
+```bash
+sam deploy --guided
+```
+![](docs/images/sam-deploy.png)
 # Useful links 🔗
 - [Quarkus][quarkus]
 - [Testcontainers Java][test-containers-java]
@@ -75,3 +90,5 @@ But don't forget the most important principle of software testing:
 [test-containers]: https://testcontainers.com/
 [sdkman-doc]: https://sdkman.io/
 [test-containers-on-gitlab-ci]: https://www.atomicjar.com/2023/01/running-testcontainers-tests-on-gitlab-ci/
+[sam-cli-prerequisites]: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/prerequisites.html
+[aws-lambda-web-adapter-doc]: https://github.com/awslabs/aws-lambda-web-adapter/tree/main
