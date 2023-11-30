@@ -63,7 +63,8 @@ public class BeersService {
                 Beer.of("Desperados"),
                 Beer.of("Goudale"),
                 Beer.of("Fischer"),
-                Beer.of("3 Monts")
+                Beer.of("3 Monts"),
+                Beer.of("ASAHI")
         );
     }
 }

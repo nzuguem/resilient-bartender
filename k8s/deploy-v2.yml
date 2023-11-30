@@ -1,9 +1,13 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: resilient-bartender-rs
+  labels:
+    app.kubernetes.io/version: v2
+  name: resilient-bartender-deploy-green
 spec:
   replicas: 3
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: resilient-bartender
@@ -14,6 +18,7 @@ spec:
         app.kubernetes.io/version: v2
         app.kubernetes.io/name: resilient-bartender
         app.kubernetes.io/component: api
+      name: resilient-bartender
     spec:
       containers:
         - image: nzuguem/resilient-bartender:v2
@@ -25,4 +30,4 @@ spec:
             - name: INSTANCE_ID
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.name
+                  fieldPath: metadata.uid
