@@ -1,16 +1,23 @@
 package me.nzuguem.resilience.bartender;
 
-import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
 @Path("beers")
+//@RunOnVirtualThread
 public class BeersResource {
+
+    @ConfigProperty(name = "resilience.bartender.host")
+    private String hostName;
+
+    @ConfigProperty(name = "resilience.bartender.version")
+    private String hostVersion;
 
     private final BeersService beersService;
 
@@ -18,28 +25,18 @@ public class BeersResource {
         this.beersService = beersService;
     }
 
-
-    @GET
-    @Path("timeout")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RunOnVirtualThread
-    public List<Beer> getBeersTimeout() {
-        return this.beersService.getBeersTimeout();
-    }
-
-    @GET
-    @Path("retry")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RunOnVirtualThread
-    public List<Beer> getBeersRetry() {
-        return this.beersService.getBeersRetry(new AtomicInteger(1));
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RunOnVirtualThread
-    public List<Beer> getBeers() {
-        return this.beersService.getBeers();
+    public Response getBeers() {
+        var beers = this.beersService.getBeersK8s();
+
+        var response = Map.of(
+                "host", this.hostName,
+                "version", this.hostVersion,
+                "beers", beers
+        );
+
+        return Response.ok(response).build();
     }
 
 }

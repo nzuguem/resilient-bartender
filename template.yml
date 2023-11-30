@@ -25,7 +25,7 @@ Resources:
     Metadata:
       DockerTag: v1
       DockerContext: ./
-      Dockerfile: Dockerfile
+      Dockerfile: Dockerfile.lambda
 
 Outputs:
   URL:

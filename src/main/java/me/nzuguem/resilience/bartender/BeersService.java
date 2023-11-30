@@ -1,7 +1,6 @@
 package me.nzuguem.resilience.bartender;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -19,7 +18,6 @@ public class BeersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BeersService.class);
 
     private final BeersProxy beersProxy;
-
 
     public BeersService(@RestClient  BeersProxy beersProxy) {
         this.beersProxy = beersProxy;
@@ -50,6 +48,22 @@ public class BeersService {
     }
 
     public List<Beer> getBeers() {
+
         return this.beersProxy.getBeers();
+    }
+
+    public List<Beer> getBeersK8s() {
+
+        LOGGER.info("Beer list starting");
+        return List.of(
+                Beer.of("Kronenbourg"),
+                Beer.of("1664"),
+                Beer.of("Pelforth"),
+                Beer.of("Grimbergen"),
+                Beer.of("Desperados"),
+                Beer.of("Goudale"),
+                Beer.of("Fischer"),
+                Beer.of("3 Monts")
+        );
     }
 }
