@@ -51,7 +51,7 @@ export class ResilientBartender extends Chart {
                 env: [
                   { 
                     name: 'INSTANCE_ID', 
-                    valueFrom: {fieldRef : {fieldPath: 'metadata.uid'}} }
+                    valueFrom: {fieldRef : {fieldPath: 'metadata.name'}} }
                 ]
               }
             ]

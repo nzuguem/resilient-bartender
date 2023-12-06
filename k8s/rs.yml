@@ -14,7 +14,6 @@ spec:
         app.kubernetes.io/version: v1
         app.kubernetes.io/name: resilient-bartender
         app.kubernetes.io/component: api
-      name: resilient-bartender
     spec:
       containers:
         - image: nzuguem/resilient-bartender:v1
@@ -26,4 +25,4 @@ spec:
             - name: INSTANCE_ID
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.uid
+                  fieldPath: metadata.name
