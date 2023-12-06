@@ -30,4 +30,4 @@ spec:
             - name: INSTANCE_ID
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.uid
+                  fieldPath: metadata.name
